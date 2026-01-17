@@ -7,8 +7,13 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private float inputH;
     private Animator anim;
+
+    [Header("Movement System")]
+    [SerializeField] private Transform feet;
     [SerializeField] private float movementVelocity;
     [SerializeField] private float jumpForce;
+    [SerializeField] private float distanceDetectionGround;
+    [SerializeField] private LayerMask jumpedLayer;
 
     [Header("Combat System")]
     [SerializeField] private Transform attackPoint;
@@ -52,11 +57,16 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && OnGround())
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             anim.SetTrigger("jump");
         }
+    }
+
+    private bool OnGround()
+    {
+        return Physics2D.Raycast(feet.position, Vector3.down, distanceDetectionGround, jumpedLayer);        
     }
 
     private void Movement()

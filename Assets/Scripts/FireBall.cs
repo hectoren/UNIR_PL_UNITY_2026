@@ -1,21 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FireBall : MonoBehaviour
 {
     private Rigidbody2D rb;
-    [SerializeField] private float shotImpulse;
-    // Start is called before the first frame update
+
+    [Header("Movement")]
+    [SerializeField] private float shotImpulse = 8f;
+
+    [Header("Combat")]
+    [SerializeField] private float damage = 10f;
+    [SerializeField] private float lifeTime = 3f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(transform.right * shotImpulse, ForceMode2D.Impulse);
+
+        // Autodestrucción
+        Destroy(gameObject, lifeTime);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        // Player
+        if (other.CompareTag("Player") || other.CompareTag("PlayerHitBox"))
+        {
+            HealthSystem health = other.GetComponent<HealthSystem>();
+            if (health != null)
+            {
+                health.ReceivedDamage(damage);
+            }
+
+            Destroy(gameObject);
+        }
+
+        // Escenario
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

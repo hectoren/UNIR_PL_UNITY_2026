@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    [SerializeField] private string gameSceneName = "MainMenu";
+
     [Header("UI")]
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject controlsPanel;
@@ -21,7 +24,6 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        // 🔒 BLOQUEO TOTAL SI HAY GAME OVER
         if (GameOverUI.IsGameOver)
             return;
 
@@ -91,10 +93,12 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        /*#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+                Application.Quit();
+        #endif*/
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(gameSceneName);
     }
 }

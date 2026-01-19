@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -7,11 +8,15 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private GameObject gameOverText;
     [SerializeField] private Volume gameOverVolume;
 
-    private bool gameOver;
+    public static bool IsGameOver { get; private set; }
 
     void Start()
     {
+        IsGameOver = false;
         gameOverText.SetActive(false);
+
+        if (gameOverVolume != null)
+            gameOverVolume.weight = 0f;
 
         Player player = FindObjectOfType<Player>();
         if (player != null)
@@ -24,9 +29,10 @@ public class GameOverUI : MonoBehaviour
 
     void Update()
     {
-        if (!gameOver) return;
+        if (!IsGameOver) return;
 
-        if (Keyboard.current.anyKey.wasPressedThisFrame)
+        if (Keyboard.current.anyKey.wasPressedThisFrame ||
+            (Gamepad.current != null && Gamepad.current.allControls.Any(c => c.IsPressed())))
         {
             QuitGame();
         }
@@ -34,7 +40,10 @@ public class GameOverUI : MonoBehaviour
 
     private void ShowGameOver()
     {
-        gameOver = true;
+        if (IsGameOver) return;
+
+        IsGameOver = true;
+
         gameOverText.SetActive(true);
 
         if (gameOverVolume != null)

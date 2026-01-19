@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
@@ -14,7 +14,6 @@ public class PauseMenu : MonoBehaviour
     {
         pausePanel.SetActive(false);
         controlsPanel.SetActive(false);
-        Time.timeScale = 1f;
 
         isPaused = false;
         showingControls = false;
@@ -22,6 +21,10 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
+        // 🔒 BLOQUEO TOTAL SI HAY GAME OVER
+        if (GameOverUI.IsGameOver)
+            return;
+
         if (IsPausePressed())
         {
             HandlePauseInput();

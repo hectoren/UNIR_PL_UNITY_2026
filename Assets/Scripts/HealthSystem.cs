@@ -3,29 +3,28 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
-    [Header("Health")]
     [SerializeField] private float health = 100f;
-    [SerializeField] private float maxHealth = 100f;
-
+    private float maxHealth;
     public bool isDead = false;
 
-    // Exposición segura para UI
+    // EVENTOS
+    public event Action OnDamaged;
+    public event Action OnDeath;
+    public event Action<float, float> OnHealthChanged;
+
+    // PROPIEDADES (solo lectura)
     public float Health => health;
     public float MaxHealth => maxHealth;
 
-    public event Action OnDamaged;
-    public event Action OnDeath;
-
-    // Evento específico para UI
-    public event Action<float, float> OnHealthChanged;
-
     private void Awake()
     {
-        if (maxHealth <= 0f)
-            maxHealth = health;
+        maxHealth = health;
+    }
 
-        health = Mathf.Clamp(health, 0f, maxHealth);
-        isDead = false;
+    private void Start()
+    {
+        // Inicializa la UI al comenzar
+        OnHealthChanged?.Invoke(health, maxHealth);
     }
 
     public void ReceivedDamage(float damageReceived)
@@ -35,11 +34,13 @@ public class HealthSystem : MonoBehaviour
         health -= damageReceived;
         health = Mathf.Clamp(health, 0f, maxHealth);
 
-        OnDamaged?.Invoke();
-
         OnHealthChanged?.Invoke(health, maxHealth);
 
-        if (health <= 0f)
+        if (health > 0f)
+        {
+            OnDamaged?.Invoke();
+        }
+        else
         {
             Kill();
         }
@@ -49,12 +50,10 @@ public class HealthSystem : MonoBehaviour
     {
         if (isDead) return;
 
-        health = 0f;
         isDead = true;
+        health = 0f;
 
-        // Asegurar actualización final de UI
         OnHealthChanged?.Invoke(health, maxHealth);
-
         OnDeath?.Invoke();
     }
 }

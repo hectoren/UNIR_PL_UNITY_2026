@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class SkeWarrior : EnemyBase
 {
     [Header("Patrol")]
@@ -17,10 +18,12 @@ public class SkeWarrior : EnemyBase
     [SerializeField] private float hurtStunTime = 0.3f;
     [SerializeField] private float deathDestroyDelay = 1.2f;
 
-    private Vector3 currentDestination;
     private int currentIndex;
+    private Vector3 currentDestination;
 
+    private Rigidbody2D rb;
     private Coroutine patrolRoutine;
+
     private bool isStunned;
     private bool isChasing;
 
@@ -31,7 +34,14 @@ public class SkeWarrior : EnemyBase
     {
         base.Awake();
 
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0f;
+        rb.freezeRotation = true;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+
         originalScale = transform.localScale;
+
         currentIndex = 0;
         currentDestination = wayPoints[currentIndex].position;
 
@@ -47,40 +57,41 @@ public class SkeWarrior : EnemyBase
 
             if (isStunned)
             {
+                rb.velocity = Vector2.zero;
                 yield return null;
                 continue;
             }
 
-            Vector3 targetPosition;
+            Vector2 direction;
+            float speed;
 
             if (isChasing && playerTarget != null)
             {
-                targetPosition = new Vector3(
-                    playerTarget.position.x,
-                    transform.position.y,
-                    transform.position.z
-                );
+                direction = new Vector2(
+                    playerTarget.position.x - transform.position.x,
+                    0f
+                ).normalized;
+
+                speed = speedPatrol * chaseSpeedMultiplier;
             }
             else
             {
-                targetPosition = currentDestination;
+                direction = new Vector2(
+                    currentDestination.x - transform.position.x,
+                    0f
+                ).normalized;
+
+                speed = speedPatrol;
             }
 
+            rb.velocity = new Vector2(direction.x * speed, rb.velocity.y);
 
-            float speed = isChasing
-                ? speedPatrol * chaseSpeedMultiplier
-                : speedPatrol;
+            FocusDirection(direction.x);
 
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                targetPosition,
-                speed * Time.deltaTime
-            );
-
-            FocusTarget(targetPosition);
-
-            if (!isChasing && Vector3.Distance(transform.position, currentDestination) <= 0.05f)
+            // Llegó al punto de patrulla
+            if (!isChasing && Mathf.Abs(transform.position.x - currentDestination.x) <= 0.05f)
             {
+                rb.velocity = Vector2.zero;
                 DefineNewDestination();
             }
 
@@ -97,9 +108,9 @@ public class SkeWarrior : EnemyBase
         currentDestination = wayPoints[currentIndex].position;
     }
 
-    private void FocusTarget(Vector3 target)
+    private void FocusDirection(float dirX)
     {
-        if (target.x > transform.position.x)
+        if (dirX > 0f)
         {
             transform.localScale = new Vector3(
                 Mathf.Abs(originalScale.x),
@@ -107,7 +118,7 @@ public class SkeWarrior : EnemyBase
                 originalScale.z
             );
         }
-        else
+        else if (dirX < 0f)
         {
             transform.localScale = new Vector3(
                 -Mathf.Abs(originalScale.x),
@@ -121,10 +132,10 @@ public class SkeWarrior : EnemyBase
     {
         if (IsDead) return;
 
-        // DETECCIÓN PARA PERSEGUIR
+        // DETECCIÓN DEL PLAYER
         if (other.CompareTag("DetectionPlayer"))
         {
-            playerTarget = other.transform.root; // root = Player
+            playerTarget = other.transform.root;
             isChasing = true;
         }
 
@@ -160,6 +171,7 @@ public class SkeWarrior : EnemyBase
     private IEnumerator HurtStun()
     {
         isStunned = true;
+        rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(hurtStunTime);
         isStunned = false;
     }
@@ -170,6 +182,9 @@ public class SkeWarrior : EnemyBase
 
         if (patrolRoutine != null)
             StopCoroutine(patrolRoutine);
+
+        rb.velocity = Vector2.zero;
+        rb.simulated = false;
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null)

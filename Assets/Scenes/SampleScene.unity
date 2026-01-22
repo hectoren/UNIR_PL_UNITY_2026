@@ -139128,6 +139128,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2696519243005474040, guid: 61e0d84dfe26daf4c9c20890770f64b6, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4295326530354251134, guid: 61e0d84dfe26daf4c9c20890770f64b6, type: 3}
       propertyPath: m_UpdateMode
       value: 2

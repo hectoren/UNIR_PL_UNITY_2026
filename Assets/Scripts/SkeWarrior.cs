@@ -7,6 +7,9 @@ public class SkeWarrior : EnemyBase
     [SerializeField] private Transform[] wayPoints;
     [SerializeField] private float speedPatrol = 2f;
 
+    [Header("Chase")]
+    [SerializeField] private float chaseSpeedMultiplier = 4f;
+
     [Header("Combat")]
     [SerializeField] private float attackDamage = 10f;
 
@@ -15,11 +18,13 @@ public class SkeWarrior : EnemyBase
     [SerializeField] private float deathDestroyDelay = 1.2f;
 
     private Vector3 currentDestination;
-    private int currentIndex = 0;
+    private int currentIndex;
 
     private Coroutine patrolRoutine;
     private bool isStunned;
+    private bool isChasing;
 
+    private Transform playerTarget;
     private Vector3 originalScale;
 
     protected override void Awake()
@@ -27,8 +32,9 @@ public class SkeWarrior : EnemyBase
         base.Awake();
 
         originalScale = transform.localScale;
-
+        currentIndex = 0;
         currentDestination = wayPoints[currentIndex].position;
+
         patrolRoutine = StartCoroutine(Patrol());
     }
 
@@ -36,27 +42,49 @@ public class SkeWarrior : EnemyBase
     {
         while (true)
         {
-            while (transform.position != currentDestination)
+            if (IsDead)
+                yield break;
+
+            if (isStunned)
             {
-                if (IsDead)
-                    yield break;
-
-                if (isStunned)
-                {
-                    yield return null;
-                    continue;
-                }
-
-                transform.position = Vector3.MoveTowards(
-                    transform.position,
-                    currentDestination,
-                    speedPatrol * Time.deltaTime
-                );
-
                 yield return null;
+                continue;
             }
 
-            DefineNewDestination();
+            Vector3 targetPosition;
+
+            if (isChasing && playerTarget != null)
+            {
+                targetPosition = new Vector3(
+                    playerTarget.position.x,
+                    transform.position.y,
+                    transform.position.z
+                );
+            }
+            else
+            {
+                targetPosition = currentDestination;
+            }
+
+
+            float speed = isChasing
+                ? speedPatrol * chaseSpeedMultiplier
+                : speedPatrol;
+
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                targetPosition,
+                speed * Time.deltaTime
+            );
+
+            FocusTarget(targetPosition);
+
+            if (!isChasing && Vector3.Distance(transform.position, currentDestination) <= 0.05f)
+            {
+                DefineNewDestination();
+            }
+
+            yield return null;
         }
     }
 
@@ -67,12 +95,11 @@ public class SkeWarrior : EnemyBase
             currentIndex = 0;
 
         currentDestination = wayPoints[currentIndex].position;
-        FocusDestination();
     }
 
-    private void FocusDestination()
+    private void FocusTarget(Vector3 target)
     {
-        if (currentDestination.x > transform.position.x)
+        if (target.x > transform.position.x)
         {
             transform.localScale = new Vector3(
                 Mathf.Abs(originalScale.x),
@@ -94,11 +121,15 @@ public class SkeWarrior : EnemyBase
     {
         if (IsDead) return;
 
+        // DETECCIÓN PARA PERSEGUIR
         if (other.CompareTag("DetectionPlayer"))
         {
-            Debug.Log("Player Detectado!!!");
+            playerTarget = other.transform.root; // root = Player
+            isChasing = true;
         }
-        else if (other.CompareTag("PlayerHitBox"))
+
+        // DAÑO AL PLAYER
+        if (other.CompareTag("PlayerHitBox"))
         {
             HealthSystem hs = other.GetComponent<HealthSystem>();
             if (hs != null)
@@ -106,9 +137,21 @@ public class SkeWarrior : EnemyBase
         }
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (IsDead) return;
+
+        if (other.CompareTag("DetectionPlayer"))
+        {
+            playerTarget = null;
+            isChasing = false;
+            currentDestination = wayPoints[currentIndex].position;
+        }
+    }
+
     protected override void HandleDamaged()
     {
-        base.HandleDamaged(); // dispara trigger "hurt"
+        base.HandleDamaged();
 
         if (IsDead || isStunned) return;
         StartCoroutine(HurtStun());
@@ -123,7 +166,7 @@ public class SkeWarrior : EnemyBase
 
     protected override void HandleDeath()
     {
-        base.HandleDeath(); // fija isDead y animación Dead
+        base.HandleDeath();
 
         if (patrolRoutine != null)
             StopCoroutine(patrolRoutine);

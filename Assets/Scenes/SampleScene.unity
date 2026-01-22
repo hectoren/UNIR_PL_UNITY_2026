@@ -137486,7 +137486,7 @@ GameObject:
   - component: {fileID: 1786264619}
   - component: {fileID: 1786264620}
   - component: {fileID: 1786264618}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: KillZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138873,6 +138873,10 @@ PrefabInstance:
       propertyPath: m_BodyType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4147038195320511468, guid: da7609720735ab141820e865beebb4f8, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: d1c83fce0754dad41bf4d9dcc487d670, type: 2}
     - target: {fileID: 4147038195320511468, guid: da7609720735ab141820e865beebb4f8, type: 3}
       propertyPath: m_Constraints
       value: 4

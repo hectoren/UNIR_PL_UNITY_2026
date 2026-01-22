@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SkeWarrior : MonoBehaviour
+public class SkeWarrior : EnemyBase
 {
     [Header("Patrol")]
     [SerializeField] private Transform[] wayPoints;
@@ -17,26 +17,19 @@ public class SkeWarrior : MonoBehaviour
     private Vector3 currentDestination;
     private int currentIndex = 0;
 
-    private HealthSystem healthSystem;
-    private Animator anim;
-
     private Coroutine patrolRoutine;
     private bool isStunned;
-    private bool isDead;
 
-    void Start()
+    private Vector3 originalScale;
+
+    protected override void Awake()
     {
-        healthSystem = GetComponent<HealthSystem>();
-        anim = GetComponent<Animator>();
+        base.Awake();
+
+        originalScale = transform.localScale;
 
         currentDestination = wayPoints[currentIndex].position;
         patrolRoutine = StartCoroutine(Patrol());
-
-        if (healthSystem != null)
-        {
-            healthSystem.OnDamaged += OnHurt;
-            healthSystem.OnDeath += OnDeath;
-        }
     }
 
     IEnumerator Patrol()
@@ -45,7 +38,7 @@ public class SkeWarrior : MonoBehaviour
         {
             while (transform.position != currentDestination)
             {
-                if (isDead)
+                if (IsDead)
                     yield break;
 
                 if (isStunned)
@@ -80,14 +73,26 @@ public class SkeWarrior : MonoBehaviour
     private void FocusDestination()
     {
         if (currentDestination.x > transform.position.x)
-            transform.localScale = Vector3.one;
+        {
+            transform.localScale = new Vector3(
+                Mathf.Abs(originalScale.x),
+                originalScale.y,
+                originalScale.z
+            );
+        }
         else
-            transform.localScale = new Vector3(-1, 1, 1);
+        {
+            transform.localScale = new Vector3(
+                -Mathf.Abs(originalScale.x),
+                originalScale.y,
+                originalScale.z
+            );
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (isDead) return;
+        if (IsDead) return;
 
         if (other.CompareTag("DetectionPlayer"))
         {
@@ -95,21 +100,17 @@ public class SkeWarrior : MonoBehaviour
         }
         else if (other.CompareTag("PlayerHitBox"))
         {
-            Debug.Log("Player Atravesado!!!");
             HealthSystem hs = other.GetComponent<HealthSystem>();
             if (hs != null)
                 hs.ReceivedDamage(attackDamage);
         }
     }
 
-    // =====================
-    // HURT
-    // =====================
-    private void OnHurt()
+    protected override void HandleDamaged()
     {
-        if (isDead || isStunned) return;
+        base.HandleDamaged(); // dispara trigger "hurt"
 
-        anim.SetTrigger("hurt");
+        if (IsDead || isStunned) return;
         StartCoroutine(HurtStun());
     }
 
@@ -120,15 +121,9 @@ public class SkeWarrior : MonoBehaviour
         isStunned = false;
     }
 
-    // =====================
-    // DEATH
-    // =====================
-    private void OnDeath()
+    protected override void HandleDeath()
     {
-        if (isDead) return;
-        isDead = true;
-
-        anim.SetBool("isDead", true);
+        base.HandleDeath(); // fija isDead y animación Dead
 
         if (patrolRoutine != null)
             StopCoroutine(patrolRoutine);

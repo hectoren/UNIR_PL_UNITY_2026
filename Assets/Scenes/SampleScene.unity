@@ -138954,6 +138954,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkeWarrior
       objectReference: {fileID: 0}
+    - target: {fileID: 1822454810523756472, guid: da7609720735ab141820e865beebb4f8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937836420237683652, guid: da7609720735ab141820e865beebb4f8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4937836420237683652, guid: da7609720735ab141820e865beebb4f8, type: 3}
       propertyPath: wayPoints.Array.data[0]
       value: 

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 170481299018343805}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.22, y: 0, z: 0}
+  m_LocalPosition: {x: 0.29, y: -0.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -311,14 +311,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Enemy
-  wayPoints: []
+  wayPoints:
+  - {fileID: 0}
+  - {fileID: 0}
   speedPatrol: 2
   chaseSpeedMultiplier: 2.5
   attackDamage: 10
   hurtStunTime: 0.3
   deathDestroyDelay: 1.2
   damageCooldown: 0.5
-  attackPoint: {fileID: 0}
+  attackPoint: {fileID: 2501746787655386274}
   attackRadius: 0.5
   damageableLayer:
     serializedVersion: 2

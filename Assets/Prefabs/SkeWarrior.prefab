@@ -316,7 +316,7 @@ MonoBehaviour:
   - {fileID: 0}
   speedPatrol: 2
   chaseSpeedMultiplier: 2.5
-  attackDamage: 2
+  attackDamage: 5
   hurtStunTime: 0.3
   deathDestroyDelay: 1.2
   damageCooldown: 0.5

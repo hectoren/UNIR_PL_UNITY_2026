@@ -14,7 +14,6 @@ public class Wizard : EnemyBase
     private Coroutine attackCoroutine;
     private bool playerDetected;
 
-    // Dirección actual del mago/proyectil
     private bool faceRight = true;
 
     protected override void Awake()
@@ -58,7 +57,6 @@ public class Wizard : EnemyBase
         attackCoroutine = null;
     }
 
-    // Animation Event
     private void ThrowBall()
     {
         if (!playerDetected || isDead) return;
@@ -73,8 +71,6 @@ public class Wizard : EnemyBase
     {
         faceRight = (player.position.x >= transform.position.x);
 
-        // Flip visual del mago (sin rotación Z)
-        // Si queda mirando al revés, invierte este ternario como hiciste con FlyingDemon.
         transform.localScale = faceRight ? Vector3.one : new Vector3(-1f, 1f, 1f);
     }
 
@@ -99,6 +95,8 @@ public class Wizard : EnemyBase
             StopCoroutine(attackCoroutine);
             attackCoroutine = null;
         }
+
+        anim.ResetTrigger("fireball");
     }
 
     protected override void HandleDeath()

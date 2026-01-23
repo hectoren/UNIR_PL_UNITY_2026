@@ -26,8 +26,7 @@ public class SkeWarrior : EnemyBase
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRadius = 0.5f;
     [SerializeField] private LayerMask damageableLayer;
-    private bool isAttacking;//
-
+    private bool isAttacking;
 
     private Animator animator;
 
@@ -79,20 +78,18 @@ public class SkeWarrior : EnemyBase
             Vector2 direction;
             float speed;
 
-            // PERSECUCIÓN + ATAQUE
             if (isChasing && playerTarget != null)
             {
                 float distanceToPlayer =
                     Mathf.Abs(playerTarget.position.x - transform.position.x);
 
-                if (isAttacking)//
-                {//
-                    rb.velocity = Vector2.zero;//
-                    yield return null;//
-                    continue;//
+                if (isAttacking)
+                {
+                    rb.velocity = Vector2.zero;
+                    yield return null;
+                    continue;
                 }
 
-                // SI ESTÁ LO SUFICIENTEMENTE CERCA ATACA
                 if (distanceToPlayer < 1.2f)
                 {
                     rb.velocity = Vector2.zero;
@@ -103,7 +100,6 @@ public class SkeWarrior : EnemyBase
                     continue;
                 }
 
-                // SI NO, SIGUE PERSIGUIENDO
                 direction = new Vector2(
                     playerTarget.position.x - transform.position.x,
                     0f
@@ -113,7 +109,6 @@ public class SkeWarrior : EnemyBase
             }
             else
             {
-                // REACTIVAR PERSECUCIÓN SI EL PLAYER REAPARECE
                 if (playerTarget != null &&
                     Mathf.Abs(playerTarget.position.x - transform.position.x) < 8f)
                 {
@@ -121,7 +116,6 @@ public class SkeWarrior : EnemyBase
                     continue;
                 }
 
-                // PATRULLA NORMAL
                 direction = new Vector2(
                     currentDestination.x - transform.position.x,
                     0f

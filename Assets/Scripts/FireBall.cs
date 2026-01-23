@@ -16,16 +16,13 @@ public class FireBall : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(transform.right * shotImpulse, ForceMode2D.Impulse);
 
-        // Autodestrucción
         Destroy(gameObject, lifeTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Player
         if (other.CompareTag("Player") || other.CompareTag("PlayerHitBox"))
         {
-            //HealthSystem health = other.GetComponent<HealthSystem>();
             HealthSystem health = other.GetComponentInParent<HealthSystem>();
             if (health != null)
             {
@@ -35,7 +32,6 @@ public class FireBall : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // Escenario
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             Destroy(gameObject);

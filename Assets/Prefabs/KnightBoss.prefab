@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 1822454810523756472}
   - component: {fileID: 4147038195320511468}
   - component: {fileID: 6174736446468515248}
+  - component: {fileID: 7517880587262813233}
   m_Layer: 6
   m_Name: KnightBoss
   m_TagString: Untagged
@@ -296,6 +297,7 @@ Transform:
   - {fileID: 4983473707704776758}
   - {fileID: 8430646490884671153}
   - {fileID: 2501746787655386274}
+  - {fileID: 4414715755403405411}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-3611286960911107334
@@ -487,6 +489,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hurtStunTime: 0.3
+--- !u!114 &7517880587262813233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562870142741707497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e65dbd3c09f89574f818d11d8d4a0290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropPrefab: {fileID: 0}
+  dropPoint: {fileID: 0}
 --- !u!1 &5971270565974384833
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,3 +727,34 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &9148308876022191677
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4414715755403405411}
+  m_Layer: 6
+  m_Name: DropPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4414715755403405411
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9148308876022191677}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8168649297937622238}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

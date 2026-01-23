@@ -1,48 +1,113 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
-public class Wizard : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+public class Wizard : EnemyBase
 {
     [SerializeField] private GameObject ball;
     [SerializeField] private Transform spawnPoint;
-    [SerializeField] private float attackTime;
-    [SerializeField] private float attackDamage;
-    private HealthSystem healthSystem;
-    private Animator anim;
-    // Start is called before the first frame update
-    void Start()
-    {
-        healthSystem = GetComponent<HealthSystem>();
-        anim = GetComponent<Animator>();
-        StartCoroutine(AttackRoutine());
+    [SerializeField] private float attackTime = 2f;
 
-        if (healthSystem != null)
-            healthSystem.OnDeath += OnDeath;
+    private Transform player;
+    private Rigidbody2D rb;
+
+    private Coroutine attackCoroutine;
+    private bool playerDetected;
+
+    // Dirección actual del mago/proyectil
+    private bool faceRight = true;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        rb = GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        GameObject playerHitBox = GameObject.FindGameObjectWithTag("PlayerHitBox");
+        if (playerHitBox != null)
+            player = playerHitBox.transform;
     }
 
-    IEnumerator AttackRoutine()
+    private void Update()
     {
-        while (true)
+        if (isDead) return;
+
+        if (playerDetected && player != null)
+            FacePlayer();
+    }
+
+    private IEnumerator AttackRoutine()
+    {
+        while (playerDetected && !isDead)
         {
             anim.SetTrigger("fireball");
-            yield return new WaitForSeconds(attackTime);
+
+            float t = 0f;
+            while (t < attackTime)
+            {
+                if (!playerDetected || isDead) yield break;
+                t += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        attackCoroutine = null;
+    }
+
+    // Animation Event
+    private void ThrowBall()
+    {
+        if (!playerDetected || isDead) return;
+
+        Quaternion rot = faceRight ? Quaternion.Euler(0f, 0f, 0f)
+                                   : Quaternion.Euler(0f, 0f, 180f);
+
+        Instantiate(ball, spawnPoint.position, rot);
+    }
+
+    private void FacePlayer()
+    {
+        faceRight = (player.position.x >= transform.position.x);
+
+        // Flip visual del mago (sin rotación Z)
+        // Si queda mirando al revés, invierte este ternario como hiciste con FlyingDemon.
+        transform.localScale = faceRight ? Vector3.one : new Vector3(-1f, 1f, 1f);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("PlayerHitBox")) return;
+
+        playerDetected = true;
+
+        if (attackCoroutine == null)
+            attackCoroutine = StartCoroutine(AttackRoutine());
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!other.CompareTag("PlayerHitBox")) return;
+
+        playerDetected = false;
+
+        if (attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+            attackCoroutine = null;
         }
     }
 
-    private void ThrowBall()
+    protected override void HandleDeath()
     {
-        Instantiate(ball, spawnPoint.position, transform.rotation);
-    }
+        base.HandleDeath();
 
-    private void OnDeath()
-    {
-        Destroy(gameObject);
+        if (attackCoroutine != null)
+            StopCoroutine(attackCoroutine);
+
+        Destroy(gameObject, 1.2f);
     }
 }

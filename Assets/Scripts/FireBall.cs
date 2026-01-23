@@ -25,7 +25,8 @@ public class FireBall : MonoBehaviour
         // Player
         if (other.CompareTag("Player") || other.CompareTag("PlayerHitBox"))
         {
-            HealthSystem health = other.GetComponent<HealthSystem>();
+            //HealthSystem health = other.GetComponent<HealthSystem>();
+            HealthSystem health = other.GetComponentInParent<HealthSystem>();
             if (health != null)
             {
                 health.ReceivedDamage(damage);

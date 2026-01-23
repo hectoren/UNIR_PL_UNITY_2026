@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SkeWarrior@Hurt
+  m_Name: KnightBoss@Hurt
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: cfaf0a8458c50b9458cc7acfae96268c, type: 2}
+  m_Motion: {fileID: 7400000, guid: 5bd4345aab7fd074f887754c9d328f80, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -92,7 +92,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SkeWarrior@Walk
+  m_Name: KnightBoss@Walk
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -106,7 +106,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 2fc80647adfbb0246afe91911d61b84a, type: 2}
+  m_Motion: {fileID: 7400000, guid: 003887adf8a7eb54c8c8fcb24f6f93b9, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -144,7 +144,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SkeWarrior@Attack_1
+  m_Name: KnightBoss@Attack_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -158,7 +158,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8b11672787ebc5e42a28166f98de943a, type: 2}
+  m_Motion: {fileID: 7400000, guid: c54b71550906de04797f1578db00cca6, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -170,7 +170,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SkeWarrior
+  m_Name: KnightBoss
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: hurt
@@ -211,7 +211,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SkeWarrior@Dead
+  m_Name: KnightBoss@Dead
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -224,7 +224,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5d0bfd382bebe2f4385c9e085fc9fc49, type: 2}
+  m_Motion: {fileID: 7400000, guid: 68e89160a9612bf40b345cc3d32e389a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

@@ -71167,7 +71167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 475499725}
   m_Layer: 0
-  m_Name: PatrolPath
+  m_Name: PatrolPathSkeWarrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138446,7 +138446,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1949204467}
   m_Layer: 0
-  m_Name: PatrolPath
+  m_Name: PatrolPathFlyingDemon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

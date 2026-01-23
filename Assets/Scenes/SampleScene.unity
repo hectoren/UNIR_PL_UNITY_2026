@@ -139118,14 +139118,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2696519243005474040, guid: 61e0d84dfe26daf4c9c20890770f64b6, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4295326530354251134, guid: 61e0d84dfe26daf4c9c20890770f64b6, type: 3}
-      propertyPath: m_UpdateMode
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6251098515762198918, guid: 61e0d84dfe26daf4c9c20890770f64b6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -30
@@ -139169,109 +139161,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2448224302360748236, guid: 61e0d84dfe26daf4c9c20890770f64b6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4681155494335571138}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61e0d84dfe26daf4c9c20890770f64b6, type: 3}
---- !u!1 &4681155494335571137 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2448224302360748236, guid: 61e0d84dfe26daf4c9c20890770f64b6, type: 3}
-  m_PrefabInstance: {fileID: 4681155494335571136}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4681155494335571138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4681155494335571137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 500e6797f07ea8e40980a5231f36512f, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4681155494335571139}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 2bc47baa-871e-4d20-b8d2-145d78f95ff8
-    m_ActionName: Gameplay/Move[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4681155494335571139}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnJump
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 8ad1b702-28a1-434a-b355-694d9c2fc69b
-    m_ActionName: Gameplay/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4681155494335571139}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnAttack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 5101656b-5799-4348-8cde-06fb445f15bd
-    m_ActionName: Gameplay/Attack[/Keyboard/z]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0255e0d9-567f-402c-bf41-42094f96888c
-    m_ActionName: Gameplay/Pause[/Keyboard/enter]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Gameplay
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
---- !u!114 &4681155494335571139 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1753292128307758240, guid: 61e0d84dfe26daf4c9c20890770f64b6, type: 3}
-  m_PrefabInstance: {fileID: 4681155494335571136}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4681155494335571137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c46dd90c3093d624d82269356d002288, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8910511887370726040
 PrefabInstance:
   m_ObjectHideFlags: 0

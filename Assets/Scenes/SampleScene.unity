@@ -132269,6 +132269,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkeWarrior
       objectReference: {fileID: 0}
+    - target: {fileID: 2501746787655386274, guid: da7609720735ab141820e865beebb4f8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2501746787655386274, guid: da7609720735ab141820e865beebb4f8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937836420237683652, guid: da7609720735ab141820e865beebb4f8, type: 3}
+      propertyPath: attackPoint
+      value: 
+      objectReference: {fileID: 906574204}
+    - target: {fileID: 4937836420237683652, guid: da7609720735ab141820e865beebb4f8, type: 3}
+      propertyPath: attackDamage
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4937836420237683652, guid: da7609720735ab141820e865beebb4f8, type: 3}
       propertyPath: wayPoints.Array.data[0]
       value: 
@@ -132322,6 +132338,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da7609720735ab141820e865beebb4f8, type: 3}
+--- !u!4 &906574204 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2501746787655386274, guid: da7609720735ab141820e865beebb4f8, type: 3}
+  m_PrefabInstance: {fileID: 906574203}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &919062115
 GameObject:
   m_ObjectHideFlags: 0
